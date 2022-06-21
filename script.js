@@ -1,5 +1,5 @@
-const sessionPromise = ort.InferenceSession.create('./nn/anime.onnx');
-fetch("./nn/characters.json")
+const sessionPromise = ort.InferenceSession.create('./model/anime.onnx');
+fetch("./model/characters.json")
     .then((r) => r.json())
     .then((json) => characters = json);
 
