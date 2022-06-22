@@ -6,14 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-    <script src="script.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>角色分辨</title>
 </head>
 
+<script>
+    if (document.location.hash == "") {
+        document.location.hash = "#home";
+    }
+</script>
+
+
 <body>
-    <input type="file" accept="image/*" id="image-input">
-    <canvas></canvas>
-    <p id="prediction"></p>
+    <section id="home">
+        <h1>這是誰？</h1>
+        <input type="file" accept="image/*" id="image-input">
+        <canvas></canvas>
+        <p id="prediction"></p>
+        <p>目前僅支援部份角色，詳細資訊請參考<a href="#detail">這裡</a>。</p>
+    </section>
+
+    <section id="detail">
+        <p>目前支援的角色如下：</p>
+        <table id="support">
+            <tr>
+                <td>作品</td>
+                <td>角色</td>
+            </tr>
+        </table>
+        <a href="#home">返回</a>
+    </section>
 </body>
+
+<script src="script.js"></script>
+<script src="predict.js"></script>
 
 </html>
