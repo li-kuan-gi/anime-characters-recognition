@@ -1,3 +1,4 @@
+from cProfile import label
 import time
 import copy
 import torch
@@ -19,6 +20,23 @@ def convert_to_onnx(model, path, input_names, output_names):
         verbose=True,
         opset_version=11,
     )
+
+
+def test_model(model, test_data_loader, device="cpu"):
+    with torch.no_grad():
+        model.to(device)
+        model.eval()
+
+        n_correct = 0
+
+        for inputs, labels in test_data_loader:
+            inputs, labels = inputs.to(device), labels.to(device)
+            outputs = model(inputs)
+            _, preds = torch.max(outputs, 1)
+            n_correct += torch.sum(preds == labels.data)
+
+        test_acc = n_correct / len(test_data_loader.dataset)
+        print(f"Test Acc: {test_acc:.4f}")
 
 
 def train_model(

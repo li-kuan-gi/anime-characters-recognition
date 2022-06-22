@@ -1,7 +1,7 @@
 from datasets.pre_process import get_transforms
 from datasets.custom_datasets import ClassifiedDatasets, get_dataloaders
 from models import get_model
-from utils import train_model, convert_to_onnx
+from utils import test_model, train_model, convert_to_onnx
 from datasets.export import export_classes
 
 import torch
@@ -11,17 +11,17 @@ cudnn.benchmark = True
 
 train_transform, eval_transform = get_transforms()
 
-k_on_datasets = ClassifiedDatasets(
+anime_datasets = ClassifiedDatasets(
     "data/anime-pictures",
     train_transform,
     eval_transform,
     validation_split=0.2,
 )
 
-export_classes(k_on_datasets.classes, "characters.json")
-train_loader, val_loader, test_loader = get_dataloaders(k_on_datasets)
+export_classes(anime_datasets.classes, "characters.json")
+train_loader, val_loader, test_loader = get_dataloaders(anime_datasets)
 
-model = get_model(output_size=len(k_on_datasets.classes))
+model = get_model(output_size=len(anime_datasets.classes))
 
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 criterion = torch.nn.CrossEntropyLoss()
@@ -37,6 +37,8 @@ train_model(
     exp_lr_scheduler,
     device=device,
 )
+
+test_model(model, test_loader)
 
 torch.save(model.state_dict(), "anime.pth")
 convert_to_onnx(model, "anime.onnx", input_names=["input"], output_names=["output"])

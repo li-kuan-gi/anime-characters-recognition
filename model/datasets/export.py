@@ -9,5 +9,5 @@ def export_classes(characters, dest):
         for char in characters
     ]
 
-    with open(dest, "w", encoding='utf-8') as json_file:
-        json.dump(char_infos, json_file)
+    with open(dest, "w", encoding="utf-8") as json_file:
+        json.dump(char_infos, json_file, ensure_ascii=False)
