@@ -49,24 +49,28 @@ class ClassifiedDatasets:
         ), DatasetFromLabeledList(val_subset, self.eval_transform)
 
 
-def get_dataloaders(calssified_datasets: ClassifiedDatasets):
+def get_dataloaders(
+    calssified_datasets: ClassifiedDatasets,
+    batch_size=4,
+    num_workers=2,
+):
     return (
         DataLoader(
             getattr(calssified_datasets, "train"),
-            batch_size=4,
+            batch_size,
             shuffle=True,
-            num_workers=4,
+            num_workers=num_workers,
         ),
         DataLoader(
             getattr(calssified_datasets, "val"),
-            batch_size=4,
+            batch_size,
             shuffle=True,
-            num_workers=4,
+            num_workers=num_workers,
         ),
         DataLoader(
             getattr(calssified_datasets, "test"),
-            batch_size=4,
+            batch_size,
             shuffle=True,
-            num_workers=4,
+            num_workers=num_workers,
         ),
     )

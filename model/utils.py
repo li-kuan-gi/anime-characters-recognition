@@ -45,7 +45,7 @@ def train_model(
     val_data_loader,
     criterion,
     optimizer,
-    scheduler,
+    scheduler=None,
     num_epochs=25,
     device="cpu",
 ):
@@ -97,7 +97,7 @@ def train_model(
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
-            if phase == "train":
+            if phase == "train" and scheduler is not None:
                 scheduler.step()
 
             dataset_size = (

@@ -42,4 +42,3 @@ test_model(model, test_loader)
 
 torch.save(model.state_dict(), "anime.pth")
 convert_to_onnx(model, "anime.onnx", input_names=["input"], output_names=["output"])
-convert_to_onnx(model, "../anime.onnx", input_names=["input"], output_names=["output"])
